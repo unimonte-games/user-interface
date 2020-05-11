@@ -530,3 +530,5 @@ MonoBehaviour:
   _wireframe: {fileID: 341225963}
   _mainMenuViewPrefab: {fileID: 4166727095947703903, guid: eaca17190a99d664aabcfd97d89fb289,
     type: 3}
+  _settingsMenuViewPrefab: {fileID: 2188249854752120811, guid: 18b985f025850b64d83e8a608c6afdea,
+    type: 3}
