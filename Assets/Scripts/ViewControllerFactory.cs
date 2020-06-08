@@ -1,27 +1,29 @@
-﻿using UnityEngine;
-
-public class ViewControllerFactory : MonoBehaviour
+﻿public class ViewControllerFactory : IViewControllerFactory
 {
-    [SerializeField]
     private SceneWireframe _wireframe;
+    private AssetLoader _assetLoader;
 
-    [Header("Prefabs")]
+    public ViewControllerFactory(SceneWireframe wireframe, AssetLoader assetLoader)
+    {
+        _wireframe = wireframe;
+        _assetLoader = assetLoader;
+    }
     
-    [SerializeField]
-    private MainMenuView _mainMenuViewPrefab;
-
-    [SerializeField]
-    private SettingsMenuView _settingsMenuViewPrefab;
-
     public MainMenuViewController CreateMainMenuViewController()
     {
-        var mainMenuView = Instantiate(_mainMenuViewPrefab);
-        return new MainMenuViewController(mainMenuView, this);
+        var mainMenuView = _assetLoader.LoadView<MainMenuView>("Main Menu View");
+        return new MainMenuViewController(mainMenuView, _wireframe, this);
     }
 
     public SettingsMenuViewController CreateSettingsMenuViewController()
     {
-        var settingsMenuView = Instantiate(_settingsMenuViewPrefab);
+        var settingsMenuView = _assetLoader.LoadView<SettingsMenuView>("Settings Menu View");
         return new SettingsMenuViewController(settingsMenuView);
+    }
+
+    public GamePlayViewController CreateGamePlayViewController()
+    {
+        var gamePlayView = _assetLoader.LoadView<GamePlayView>("Game Play View");
+        return new GamePlayViewController(gamePlayView, _wireframe, this);
     }
 }

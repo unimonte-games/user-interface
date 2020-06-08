@@ -2,10 +2,12 @@
 
 public class MainMenuViewController : ViewController<MainMenuView>
 {
-    private ViewControllerFactory _factory;
+    private SceneWireframe _wireframe;
+    private IViewControllerFactory _factory;
 
-    public MainMenuViewController(MainMenuView view, ViewControllerFactory factory) : base(view)
+    public MainMenuViewController(MainMenuView view, SceneWireframe wireframe, IViewControllerFactory factory) : base(view)
     {
+        _wireframe = wireframe;
         _factory = factory;
     }
 
@@ -25,7 +27,10 @@ public class MainMenuViewController : ViewController<MainMenuView>
 
     private void PlayGame()
     {
-        Debug.Log("Play");
+        var viewController = _factory.CreateGamePlayViewController();
+        viewController.Setup();
+        
+        _wireframe.PresentViewController(viewController);
     }
 
     private void ShowSettingsMenu()
